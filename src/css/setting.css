@@ -1,0 +1,145 @@
+.settings-container {
+  padding: 5px 0;
+}
+
+.settings-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 25px;
+}
+
+.settings-card {
+  background: white;
+  border-radius: 15px;
+  padding: 25px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+  border: 1px solid #eef0f2;
+}
+
+.settings-card.full-width {
+  grid-column: span 2;
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid #f5f7fa;
+}
+
+.card-header h3 {
+  font-size: 18px;
+  font-weight: 700;
+  color: #111;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  color: #666;
+  margin-bottom: 8px;
+}
+
+.form-group input, .form-group select {
+  width: 100%;
+  padding: 12px 15px;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.form-group input:focus, .form-group select:focus {
+  border-color: #3279d9;
+}
+
+.save-btn {
+  width: 100%;
+  padding: 12px;
+  background-color: #174275;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.save-btn:hover {
+  background-color: #3279d9;
+}
+
+.add-btn {
+  padding: 8px 15px;
+  background-color: #174275;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+/* Table Styles */
+.settings-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.settings-table th {
+  text-align: left;
+  padding: 15px;
+  font-size: 13px;
+  color: #999;
+  border-bottom: 1px solid #f5f7fa;
+}
+
+.settings-table td {
+  padding: 18px 15px;
+  font-size: 14px;
+  color: #333;
+  border-bottom: 1px solid #f5f7fa;
+}
+
+.type-tag {
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.type-tag.danger { background: #fff1f0; color: #ff4d4f; }
+.type-tag.warning { background: #fff7e6; color: #faad14; }
+
+.status-dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: #d9d9d9;
+  margin-right: 8px;
+}
+
+.status-dot.active {
+  background-color: #52c41a;
+}
+
+.edit-btn, .delete-btn {
+  background: none;
+  border: none;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  margin-right: 15px;
+}
+
+.edit-btn { color: #174275; }
+.delete-btn { color: #ff4d4f; }

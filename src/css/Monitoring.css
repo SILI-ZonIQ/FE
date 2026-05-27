@@ -1,0 +1,185 @@
+/* Monitoring.css */
+.monitoring-content {
+  padding: 0;
+}
+
+.monitoring-layout {
+  display: grid;
+  grid-template-columns: 1.8fr 1fr; /* CCTV를 더 크게 */
+  gap: 25px;
+  align-items: start;
+}
+
+/* CCTV 영역 */
+.main-cctv-area {
+  background: white;
+  padding: 25px;
+  border-radius: 24px;
+  border: 1px solid #eef0f2;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.04);
+}
+
+.cctv-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.cctv-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: #333;
+}
+
+.live-tag {
+  background: #ff4d4f;
+  color: white;
+  font-size: 11px;
+  font-weight: 800;
+  padding: 3px 10px;
+  border-radius: 6px;
+  letter-spacing: 1px;
+}
+
+.cctv-large-view {
+  height: 550px; /* 대형 화면 */
+  background: #1a1a1a;
+  border-radius: 16px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.overlay-info {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  color: #00ff00; /* 전형적인 CCTV 텍스트 색상 */
+  font-family: monospace;
+  font-size: 14px;
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
+  line-height: 1.6;
+}
+
+.cctv-placeholder {
+  text-align: center;
+  color: #444;
+}
+
+.cctv-placeholder p {
+  margin-top: 15px;
+  font-size: 14px;
+}
+
+/* 데이터 카드 공통 */
+.data-card {
+  background: white;
+  padding: 25px;
+  border-radius: 24px;
+  border: 1px solid #eef0f2;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.04);
+  margin-bottom: 25px;
+}
+
+.card-title {
+  font-size: 17px;
+  font-weight: 700;
+  color: #333;
+  margin-bottom: 20px;
+  padding-left: 10px;
+  border-left: 4px solid #0046B4;
+}
+
+/* 1. 감지 정보 섹션 */
+.detection-stats {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.stat-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 20px;
+  background: #f8f9fb;
+  border-radius: 14px;
+}
+
+.stat-item.danger {
+  background: #fff1f0;
+  border: 1px solid rgba(255, 77, 79, 0.2);
+}
+
+.stat-label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+  color: #666;
+  font-weight: 600;
+}
+
+.stat-item.danger .stat-label { color: #ff4d4f; }
+
+.stat-value {
+  font-size: 22px;
+  font-weight: 800;
+  color: #333;
+}
+
+.stat-value span {
+  font-size: 14px;
+  color: #999;
+  margin-left: 4px;
+  font-weight: 500;
+}
+
+.stat-value.highlight {
+  color: #ff4d4f;
+  font-size: 18px;
+}
+
+.last-event-box {
+  margin-top: 20px;
+  padding: 15px;
+  background: #f0f4ff;
+  border-radius: 10px;
+  font-size: 13px;
+}
+
+.event-label { font-weight: 700; color: #0046B4; margin-right: 8px; }
+.event-msg { color: #333; }
+
+/* 2. 위험 구역 현황 섹션 */
+.zone-table {
+  display: flex;
+  flex-direction: column;
+}
+
+.table-header {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr 0.6fr;
+  padding: 10px 15px;
+  background: #f5f7fa;
+  border-radius: 8px;
+  font-size: 12px;
+  color: #888;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.table-row {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr 0.6fr;
+  padding: 15px;
+  border-bottom: 1px solid #f5f7fa;
+  align-items: center;
+}
+
+.z-name { font-size: 14px; font-weight: 600; color: #333; }
+.z-coords { font-size: 12px; color: #777; display: flex; align-items: center; gap: 5px; }
+.z-status { font-size: 13px; font-weight: 700; text-align: right; }
