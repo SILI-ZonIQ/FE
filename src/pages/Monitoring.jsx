@@ -1,4 +1,8 @@
-import '../css/Monitoring.css';
+import styles from '../css/Monitoring.module.css';
+
+// styles는 모니터링 화면 전용 CSS 이름표 모음입니다.
+// cx는 여러 이름표를 한 칸 띄워 붙여주는 도우미라서, 기존 디자인 값은 그대로 두고 충돌만 막습니다.
+const cx = (...classNames) => classNames.filter(Boolean).map((className) => styles[className]).join(' ');
 
 const IconCamera = () => <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>;
 const IconUser = () => <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>;
@@ -22,21 +26,21 @@ const Monitoring = () => {
   };
 
   return (
-    <div className="monitoring-content">
-      <div className="monitoring-layout">
+    <div className={cx('monitoring-content')}>
+      <div className={cx('monitoring-layout')}>
         
         {/* 왼쪽: 단일 대형 CCTV 화면 */}
-        <div className="main-cctv-area">
-          <div className="cctv-header">
-            <span className="cctv-title">Main CCTV - Factory Floor A</span>
-            <span className="live-tag">LIVE</span>
+        <div className={cx('main-cctv-area')}>
+          <div className={cx('cctv-header')}>
+            <span className={cx('cctv-title')}>Main CCTV - Factory Floor A</span>
+            <span className={cx('live-tag')}>LIVE</span>
           </div>
-          <div className="cctv-large-view">
-            <div className="overlay-info">
+          <div className={cx('cctv-large-view')}>
+            <div className={cx('overlay-info')}>
               <p>REC 00:45:12</p>
               <p>CAM 01</p>
             </div>
-            <div className="cctv-placeholder">
+            <div className={cx('cctv-placeholder')}>
               <IconCamera />
               <p>실시간 영상 스트리밍 중...</p>
             </div>
@@ -44,41 +48,41 @@ const Monitoring = () => {
         </div>
 
         {/* 오른쪽: 감지 정보 및 위험 구역 현황 */}
-        <div className="side-data-area">
+        <div className={cx('side-data-area')}>
           
           {/* 1. 실시간 감지 정보 */}
-          <section className="data-card detection-card">
-            <h3 className="card-title">실시간 감지 정보</h3>
-            <div className="detection-stats">
-              <div className="stat-item">
-                <div className="stat-label"><IconUser /> 감지된 작업자 수</div>
-                <div className="stat-value">{detections.totalWorkers}<span>명</span></div>
+          <section className={cx('data-card', 'detection-card')}>
+            <h3 className={cx('card-title')}>실시간 감지 정보</h3>
+            <div className={cx('detection-stats')}>
+              <div className={cx('stat-item')}>
+                <div className={cx('stat-label')}><IconUser /> 감지된 작업자 수</div>
+                <div className={cx('stat-value')}>{detections.totalWorkers}<span>명</span></div>
               </div>
-              <div className="stat-item danger">
-                <div className="stat-label"><IconAlert /> 위험 구역 내 작업자</div>
-                <div className="stat-value">{detections.dangerZoneWorkers}<span>명</span></div>
+              <div className={cx('stat-item', 'danger')}>
+                <div className={cx('stat-label')}><IconAlert /> 위험 구역 내 작업자</div>
+                <div className={cx('stat-value')}>{detections.dangerZoneWorkers}<span>명</span></div>
               </div>
-              <div className="stat-item">
-                <div className="stat-label"><IconAlert /> 위험 상황</div>
-                <div className="stat-value highlight">{detections.riskLevel}</div>
+              <div className={cx('stat-item')}>
+                <div className={cx('stat-label')}><IconAlert /> 위험 상황</div>
+                <div className={cx('stat-value', 'highlight')}>{detections.riskLevel}</div>
               </div>
             </div>
           </section>
 
           {/* 2. 위험 구역 현황 */}
-          <section className="data-card zone-card">
-            <h3 className="card-title">위험 구역 현황</h3>
-            <div className="zone-table">
-              <div className="table-header">
+          <section className={cx('data-card', 'zone-card')}>
+            <h3 className={cx('card-title')}>위험 구역 현황</h3>
+            <div className={cx('zone-table')}>
+              <div className={cx('table-header')}>
                 <span>구역 이름</span>
                 <span>좌표</span>
                 <span>상태</span>
               </div>
               {zones.map(zone => (
-                <div key={zone.id} className="table-row">
-                  <span className="z-name">{zone.name}</span>
-                  <span className="z-coords"><IconLoc /> {zone.coords}</span>
-                  <span className="z-status" style={{ color: zone.color }}>{zone.status}</span>
+                <div key={zone.id} className={cx('table-row')}>
+                  <span className={cx('z-name')}>{zone.name}</span>
+                  <span className={cx('z-coords')}><IconLoc /> {zone.coords}</span>
+                  <span className={cx('z-status')} style={{ color: zone.color }}>{zone.status}</span>
                 </div>
               ))}
             </div>

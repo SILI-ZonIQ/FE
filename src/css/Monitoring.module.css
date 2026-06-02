@@ -1,4 +1,5 @@
 /* Monitoring.css */
+/* CSS Module 파일입니다. 모니터링 화면의 스타일이 다른 페이지로 새지 않게 막습니다. */
 .monitoring-content {
   padding: 0;
 }
@@ -14,10 +15,12 @@
 .main-cctv-area {
   background: white;
   padding: 25px;
-  border-radius: 24px;
+  border-radius: 6px;
   border: 1px solid #eef0f2;
   box-shadow: 0 4px 15px rgba(0,0,0,0.04);
 }
+
+.side-data-area {}
 
 .cctv-header {
   display: flex;
@@ -45,7 +48,7 @@
 .cctv-large-view {
   height: 550px; /* 대형 화면 */
   background: #1a1a1a;
-  border-radius: 16px;
+  border-radius: 6px;
   position: relative;
   display: flex;
   align-items: center;
@@ -78,11 +81,15 @@
 .data-card {
   background: white;
   padding: 25px;
-  border-radius: 24px;
+  border-radius: 6px;
   border: 1px solid #eef0f2;
   box-shadow: 0 4px 15px rgba(0,0,0,0.04);
   margin-bottom: 25px;
 }
+
+.detection-card {}
+
+.zone-card {}
 
 .card-title {
   font-size: 17px;
@@ -106,7 +113,7 @@
   align-items: center;
   padding: 15px 20px;
   background: #f8f9fb;
-  border-radius: 14px;
+  border-radius: 6px;
 }
 
 .stat-item.danger {
@@ -147,7 +154,7 @@
   margin-top: 20px;
   padding: 15px;
   background: #f0f4ff;
-  border-radius: 10px;
+  border-radius: 6px;
   font-size: 13px;
 }
 
@@ -165,7 +172,7 @@
   grid-template-columns: 1.2fr 1fr 0.6fr;
   padding: 10px 15px;
   background: #f5f7fa;
-  border-radius: 8px;
+  border-radius: 6px;
   font-size: 12px;
   color: #888;
   font-weight: 700;

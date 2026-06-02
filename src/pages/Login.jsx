@@ -1,6 +1,10 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import '../css/login.css'; // 경로 및 소문자 파일명 반영
+import styles from '../css/login.module.css';
+
+// styles는 이 파일 전용 CSS 이름표 모음입니다. 다른 페이지 CSS와 이름이 같아도 서로 섞이지 않습니다.
+// cx는 "login-card active"처럼 여러 이름표가 필요할 때 안전하게 합쳐주는 도우미입니다.
+const cx = (...classNames) => classNames.filter(Boolean).map((className) => styles[className]).join(' ');
 
 const ShieldIcon = ({ size = 48, color = "#0046B4" }) => (
   <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
@@ -32,32 +36,32 @@ const Login = () => {
       alert('이름과 전화번호를 모두 입력해주세요.');
       return;
     }
-    navigate('/dashboard');
+    // ⭕ 로그인 성공 시 입력받은 name 상태값을 대시보드로 동적 전송합니다.
+    navigate('/dashboard', { state: { username: name } });
   };
 
   return (
-    <div className="login-container">
+    <div className={cx('login-container')}>
       {/* 상단 우측 시계 제거됨 */}
 
-      <div className="login-card">
-        <div className="login-header">
+      <div className={cx('login-card')}>
+        <div className={cx('login-header')}>
           {/* 방패 아이콘 크기 64로 확대 */}
-          <div className="logo-icon"><ShieldIcon size={64} /></div>
+          <div className={cx('logo-icon')}><ShieldIcon size={64} /></div>
           
           {/* 브랜드명 분리 및 크기 조정 */}
-          <h1 className="brand-name">
-            <span className="brand-zon">ZON</span>
-            <span className="brand-iq">IQ</span>
+          <h1 className={cx('brand-name')}>
+            <span className={cx('brand-zon')}>ZON</span>
+            <span className={cx('brand-iq')}>IQ</span>
           </h1>
-          <p className="brand-subtitle">작업안전 통합제어 시스템</p>
         </div>
-        <div className="divider"></div>
-        <div className="login-body">
-          <h2 className="login-title">로그인</h2>
-          <p className="login-subtitle">계정 정보를 입력하여 로그인해주세요.</p>
-          <form className="login-form" onSubmit={handleLogin}>
-            <div className="input-group">
-              <span className="input-icon"><UserIcon /></span>
+        <div className={cx('divider')}></div>
+        <div className={cx('login-body')}>
+          <h2 className={cx('login-title')}>로그인</h2>
+          <p className={cx('login-subtitle')}>계정 정보를 입력하여 로그인해주세요.</p>
+          <form className={cx('login-form')} onSubmit={handleLogin}>
+            <div className={cx('input-group')}>
+              <span className={cx('input-icon')}><UserIcon /></span>
               <input 
                 type="text" 
                 value={name} 
@@ -65,8 +69,8 @@ const Login = () => {
                 placeholder="이름을 입력해주세요" 
               />
             </div>
-            <div className="input-group">
-              <span className="input-icon"><PhoneIcon /></span>
+            <div className={cx('input-group')}>
+              <span className={cx('input-icon')}><PhoneIcon /></span>
               <input 
                 type="text" 
                 value={phoneNumber} 
@@ -74,14 +78,14 @@ const Login = () => {
                 placeholder="전화번호를 입력해주세요" 
               />
             </div>
-            <button type="submit" className="login-button">로그인</button>
+            <button type="submit" className={cx('login-button')}>로그인</button>
           </form>
         </div>
       </div>
 
-      <footer className="login-footer">
-        <p className="copyright">© 2025 ZONIQ. All rights reserved.</p>
-        <div className="footer-links">
+      <footer className={cx('login-footer')}>
+        <p className={cx('copyright')}>© 2025 ZONIQ. All rights reserved.</p>
+        <div className={cx('footer-links')}>
           <span>개인정보처리방침</span> | <span>이용약관</span> | <span>고객센터</span>
         </div>
       </footer>

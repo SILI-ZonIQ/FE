@@ -1,0 +1,621 @@
+/* PlcStatus.css */
+/* CSS Module 파일입니다. PLC 화면의 버튼, 테이블, 폼 스타일이 다른 화면과 충돌하지 않습니다. */
+.repair-management-content {
+    width: 100%;
+    padding: 0;
+    box-sizing: border-box;
+    margin-top: -6px;
+}
+
+/* 상단 타이틀 */
+.repair-title-section {
+    margin-bottom: 20px;
+}
+.repair-title-section h2 {
+    font-size: 22px;
+    font-weight: 700;
+    color: #111;
+    margin: 0 0 6px 0;
+}
+.repair-title-section p {
+    font-size: 14px;
+    color: #666;
+    margin: 0;
+}
+
+/* 상단 탭 버튼 */
+.repair-tabs {
+    display: flex;
+    gap: 20px;
+    border-bottom: 2px solid #edf0f5;
+    margin-bottom: 20px;
+    padding: 0px;
+}
+.repair-tabs button {
+    background: none;
+    border: none;
+    padding: 10px 4px;
+    font-size: 15px;
+    font-weight: 700;
+    color: #888;
+    cursor: pointer;
+    position: relative;
+}
+.repair-tabs button.active {
+    color: #1a4f94;
+}
+.repair-tabs button.active::after {
+    content: "";
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: #174275;
+}
+
+/* 메인 대시보드 그리드 분할 (왼쪽 폼:오른쪽 정보 = 1 : 1.1 비율) */
+.repair-grid-container {
+    display: grid;
+    grid-template-columns: 1fr 1.1fr;
+    gap: 24px;
+    align-items: start;
+}
+
+/* 공통 흰색 섹션 카드 박스 (전부 각지게 6px 몰딩) */
+.repair-box {
+    background: white;
+    border: 1px solid #eef0f2;
+    border-radius: 6px;
+    padding: 24px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.02);
+    box-sizing: border-box;
+}
+.repair-box h3 {
+    font-size: 16px;
+    font-weight: 700;
+    color: #222;
+    margin: 0 0 20px 0;
+}
+
+/* 왼쪽 입력 폼 구성 */
+.left-form-panel {
+    display: flex;
+    flex-direction: column;
+    height: 720px; /* 고정 높이 제공으로 정렬 균형 최적화 */
+}
+.form-scroll-area {
+    flex: 1;
+    overflow-y: auto;
+    padding-right: 4px;
+}
+.form-row {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 16px;
+}
+.form-flex-row {
+    display: flex;
+    gap: 16px;
+}
+.flex-1 {
+    flex: 1;
+}
+
+.form-row label {
+    font-size: 13px;
+    font-weight: 700;
+    color: #333;
+}
+.form-row label .required {
+    color: #ef4444;
+    margin-left: 2px;
+}
+
+/* 💡 여기에 input[type="date"]를 추가하여 디자인이 깨지지 않도록 연결했습니다. */
+.form-row input[type="text"],
+.form-row input[type="datetime-local"],
+.form-row input[type="date"],
+.form-row select,
+.form-row textarea {
+    width: 100%;
+    height: 40px;
+    padding: 8px 12px;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    font-size: 14px;
+    color: #333;
+    outline: none;
+    background-color: white;
+    box-sizing: border-box;
+}
+
+/* select는 브라우저가 기본 화살표를 제멋대로 그립니다.
+   그래서 기본 화살표를 끄고, 같은 위치에 SVG 화살표를 배경으로 넣어 정확히 가운데 맞춥니다. */
+.form-row select {
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 20 20' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M5 7.5L10 12.5L15 7.5' stroke='%23333' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    background-size: 20px 20px;
+    padding-right: 44px;
+}
+.form-row textarea {
+    height: 90px;
+    resize: none;
+    font-family: inherit;
+}
+.form-row input:focus,
+.form-row select:focus,
+.form-row textarea:focus {
+    border-color: #174275;
+}
+
+/* 하단 처리 버튼 */
+.form-actions-btn {
+    display: flex;
+    gap: 12px;
+    margin-top: 16px;
+}
+.btn-clear,
+.btn-save {
+    flex: 1;
+    height: 44px;
+    font-size: 14px;
+    font-weight: 700;
+    border-radius: 6px;
+    cursor: pointer;
+    border: none;
+}
+.btn-clear {
+    background: #f1f3f7;
+    color: #555;
+}
+.btn-save {
+    background: #174275;
+    color: white;
+}
+.btn-clear:hover {
+    background: #e5e7eb;
+}
+.btn-save:hover {
+    background: #1d4ed8;
+}
+
+/* 오른쪽 2중 위아래 적층 레이아웃 */
+.right-double-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.panel-header-inline {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+.panel-header-inline h3 {
+    margin: 0;
+}
+
+.btn-text-more {
+    background: none;
+    border: none;
+    color: #666;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+/* 이력 미니 테이블 스펙 */
+.right-history-panel {
+    height: 350px;
+}
+.repair-table-wrapper {
+    overflow-y: auto;
+    height: 250px;
+}
+.repair-mini-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+}
+.repair-mini-table th {
+    background: #f8f9fa;
+    color: #666;
+    font-weight: 700;
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #edf0f5;
+    position: sticky;
+    top: 0;
+}
+.repair-mini-table td {
+    padding: 12px 10px;
+    border-bottom: 1px solid #f4f6f9;
+    color: #444;
+}
+.clickable-row {
+    cursor: pointer;
+}
+.clickable-row:hover {
+    background: #fafbfc;
+}
+.text-bold {
+    font-weight: 700;
+    color: #222;
+}
+
+/* 상태 플랫 배지 */
+.badge-status {
+    font-size: 11px;
+    font-weight: 700;
+    padding: 3px 8px;
+    border-radius: 4px;
+}
+.badge-status.success {
+    background: #e6f4ea;
+    color: #137333;
+}
+.badge-status.progress {
+    background: #ffeac7;
+    color: #b06000;
+}
+
+.btn-table-view {
+    background: white;
+    border: 1px solid #dcdcdc;
+    padding: 3px 8px;
+    font-size: 12px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+/* 하단 상세 내용 패널 그리드 */
+.right-detail-panel {
+    height: 346px;
+}
+.detail-info-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px 20px;
+}
+.detail-item {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+.detail-item.full-width {
+    grid-column: span 2;
+}
+.detail-item .label {
+    font-size: 12px;
+    color: #888;
+    font-weight: 600;
+}
+.detail-item .val {
+    font-size: 14px;
+    color: #222;
+    font-weight: 500;
+}
+
+
+
+/* 여기부터는 "수리 이력" 탭 전용 화면입니다.
+   기존 수리 등록 화면은 그대로 두고, 이력만 길게 볼 수 있는 별도 목록 화면을 만든 것입니다. */
+.history-page {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.history-summary-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+}
+
+.history-summary-card {
+    background: white;
+    border: 1px solid #eef0f2;
+    border-radius: 6px;
+    padding: 18px 20px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.02);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.history-summary-card span {
+    color: #666;
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.history-summary-card strong {
+    color: #174275;
+    font-size: 24px;
+    font-weight: 800;
+}
+
+.history-list-panel {
+    background: white;
+    border: 1px solid #eef0f2;
+    border-radius: 6px;
+    padding: 24px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.02);
+}
+
+.history-list-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 20px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid #f0f2f5;
+}
+
+.history-list-header h3 {
+    margin: 0 0 6px 0;
+    font-size: 18px;
+    font-weight: 800;
+    color: #222;
+}
+
+.history-list-header p {
+    margin: 0;
+    color: #777;
+    font-size: 13px;
+}
+
+.history-list-header span {
+    color: #174275;
+    background: #eef4ff;
+    padding: 6px 10px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 800;
+}
+
+.history-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.history-item {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr auto;
+    gap: 20px;
+    align-items: center;
+    padding: 16px;
+    border: 1px solid #edf0f5;
+    border-radius: 6px;
+    background: #fff;
+}
+
+.history-item:hover {
+    background: #fafbfc;
+}
+
+.history-item-main {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.history-avatar {
+    width: 44px;
+    height: 44px;
+    border-radius: 6px;
+    background: #eef4ff;
+    color: #174275;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    font-weight: 800;
+}
+
+.history-title-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 5px;
+}
+
+.history-title-row h4 {
+    margin: 0;
+    color: #222;
+    font-size: 15px;
+    font-weight: 800;
+}
+
+.history-item-main p {
+    margin: 0;
+    color: #777;
+    font-size: 12px;
+}
+
+.history-meta {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    color: #555;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+/* 모달은 화면 위에 한 장의 종이를 올리는 것처럼 보이게 만든 상세창입니다. */
+.repair-modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(15, 23, 42, 0.42);
+    backdrop-filter: blur(2px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10000;
+    padding: 28px;
+}
+
+.repair-modal {
+    width: min(1120px, 96vw);
+    background: white;
+    border-radius: 8px;
+    padding: 24px;
+    box-shadow: 0 24px 70px rgba(0, 0, 0, 0.22);
+}
+
+.repair-modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 22px;
+}
+
+.repair-modal-header h3 {
+    margin: 0;
+    color: #1f2937;
+    font-size: 26px;
+    font-weight: 600;
+}
+
+.repair-modal-header button {
+    width: 36px;
+    height: 36px;
+    border: none;
+    background: transparent;
+    color: #111827;
+    font-size: 40px;
+    line-height: 1;
+    cursor: pointer;
+}
+
+.repair-modal-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+}
+
+.modal-card {
+    border: 1px solid #e3e8f0;
+    border-radius: 8px;
+    padding: 20px;
+    background: #fff;
+}
+
+.equipment-card {
+    display: grid;
+    grid-template-columns: 160px 1fr;
+    gap: 28px;
+    align-items: center;
+}
+
+.equipment-card img {
+    width: 160px;
+    height: 160px;
+    object-fit: cover;
+    border-radius: 6px;
+}
+
+.modal-info-table {
+    display: grid;
+    grid-template-columns: 110px 1fr;
+    gap: 18px 26px;
+    align-items: center;
+}
+
+.modal-info-table span,
+.time-card p,
+.manager-card p {
+    color: #667085;
+    font-size: 16px;
+    font-weight: 800;
+}
+
+.modal-info-table strong,
+.time-card strong,
+.manager-card strong {
+    color: #222;
+    font-size: 17px;
+    font-weight: 500;
+}
+
+.modal-info-table em {
+    display: inline-block;
+    color: #d92d20;
+    background: #fee4e2;
+    padding: 7px 14px;
+    border-radius: 6px;
+    font-style: normal;
+}
+
+.time-card,
+.manager-card {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 18px;
+}
+
+.time-card div,
+.manager-card div {
+    display: grid;
+    grid-template-columns: 28px 1fr auto;
+    gap: 14px;
+    align-items: center;
+}
+
+.time-card span,
+.manager-card span {
+    color: #667085;
+    font-size: 18px;
+}
+
+.time-card p,
+.manager-card p {
+    margin: 0;
+}
+
+.success-text {
+    color: #16a34a !important;
+    background: #dcfce7;
+    padding: 6px 12px;
+    border-radius: 6px;
+}
+
+.progress-text {
+    color: #b06000 !important;
+    background: #ffeac7;
+    padding: 6px 12px;
+    border-radius: 6px;
+}
+
+.description-card h4 {
+    margin: 0 0 12px 0;
+    color: #222;
+    font-size: 17px;
+    font-weight: 600;
+}
+
+.description-card p {
+    margin: 0 0 28px 0;
+    color: #222;
+    font-size: 16px;
+    line-height: 1.7;
+    font-weight: 500;
+}
+
+.description-card ul {
+    margin: 0;
+    padding-left: 22px;
+}
+
+.description-card li {
+    color: #222;
+    font-size: 16px;
+    line-height: 1.8;
+    font-weight: 500;
+}
