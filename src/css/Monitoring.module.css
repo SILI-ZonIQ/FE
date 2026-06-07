@@ -1,17 +1,15 @@
-/* Monitoring.css */
-/* CSS Module 파일입니다. 모니터링 화면의 스타일이 다른 페이지로 새지 않게 막습니다. */
 .monitoring-content {
   padding: 0;
 }
 
 .monitoring-layout {
   display: grid;
-  grid-template-columns: 1.8fr 1fr; /* CCTV를 더 크게 */
+  grid-template-columns: 1.8fr 1fr; 
   gap: 25px;
   align-items: start;
 }
 
-/* CCTV 영역 */
+
 .main-cctv-area {
   background: white;
   padding: 25px;
@@ -19,8 +17,6 @@
   border: 1px solid #eef0f2;
   box-shadow: 0 4px 15px rgba(0,0,0,0.04);
 }
-
-.side-data-area {}
 
 .cctv-header {
   display: flex;
@@ -46,7 +42,7 @@
 }
 
 .cctv-large-view {
-  height: 550px; /* 대형 화면 */
+  height: 550px; 
   background: #1a1a1a;
   border-radius: 6px;
   position: relative;
@@ -60,7 +56,7 @@
   position: absolute;
   top: 20px;
   left: 20px;
-  color: #00ff00; /* 전형적인 CCTV 텍스트 색상 */
+  color: #00ff00;
   font-family: monospace;
   font-size: 14px;
   text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
@@ -77,7 +73,6 @@
   font-size: 14px;
 }
 
-/* 데이터 카드 공통 */
 .data-card {
   background: white;
   padding: 25px;
@@ -87,9 +82,7 @@
   margin-bottom: 25px;
 }
 
-.detection-card {}
 
-.zone-card {}
 
 .card-title {
   font-size: 17px;
@@ -100,7 +93,7 @@
   border-left: 4px solid #0046B4;
 }
 
-/* 1. 감지 정보 섹션 */
+
 .detection-stats {
   display: flex;
   flex-direction: column;
@@ -161,7 +154,7 @@
 .event-label { font-weight: 700; color: #0046B4; margin-right: 8px; }
 .event-msg { color: #333; }
 
-/* 2. 위험 구역 현황 섹션 */
+
 .zone-table {
   display: flex;
   flex-direction: column;

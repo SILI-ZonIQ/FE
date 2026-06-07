@@ -1,11 +1,10 @@
 import { useState } from 'react';
 import styles from '../css/Alert.module.css';
 
-// styles는 알림 로그 화면 전용 CSS 이름표 모음입니다.
-// cx를 쓰면 active 같은 흔한 이름도 이 파일 안에서만 작동하게 연결할 수 있습니다.
 const cx = (...classNames) => classNames.filter(Boolean).map((className) => styles[className]).join(' ');
 
 const IconSearch = () => <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>;
+const IconCamera = () => <svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>;
 
 const Alert = () => {
   const [filters, setFilters] = useState({
@@ -31,6 +30,8 @@ const Alert = () => {
 
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 5;
+
+  const [selectedVideoLog, setSelectedVideoLog] = useState(null);
 
   const handleFilterChange = (e) => {
     const { name, value } = e.target;
@@ -69,6 +70,35 @@ const Alert = () => {
     pageNumbers.push(i);
   }
 
+  const renderVideoModal = () => {
+    if (!selectedVideoLog) return null;
+
+    return (
+      <div className={cx('video-modal-overlay')} onClick={() => setSelectedVideoLog(null)}>
+        <div className={cx('video-modal-window')} onClick={(e) => e.stopPropagation()}>
+          <div className={cx('video-modal-header')}>
+            <h4>{selectedVideoLog.area} - 위험 녹화 영상 분할 보기</h4>
+            <button onClick={() => setSelectedVideoLog(null)} aria-label="닫기">×</button>
+          </div>
+          <div className={cx('video-modal-body')}>
+            <div className={cx('video-screen-container')}>
+              <div className={cx('video-live-indicator')}>● 당시 상황 기록</div>
+              <div className={cx('video-placeholder-box')}>
+                <IconCamera />
+                <p>[{selectedVideoLog.date} {selectedVideoLog.time}] 발생 위험 감지 영상</p>
+                <span>카메라 피드 데이터 수집 완료 및 아카이빙됨</span>
+              </div>
+            </div>
+            <div className={cx('video-info-strip')}>
+              <span><strong>발생 일시:</strong> {selectedVideoLog.date} {selectedVideoLog.time}</span>
+              <span><strong>관제 구역:</strong> {selectedVideoLog.area}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  };
+
   return (
     <div className={cx('alert-log-content')}>
       <section className={cx('filter-section')} style={{ borderRadius: '6px' }}>
@@ -96,6 +126,7 @@ const Alert = () => {
           <div className={cx('t-head')}>
             <span>날짜/시간</span>
             <span>발생 구역</span>
+            <span>작업</span>
           </div>
           <div className={cx('t-body')}>
             {currentLogs.length > 0 ? (
@@ -106,6 +137,14 @@ const Alert = () => {
                     <span className={cx('t')}>{log.time}</span>
                   </div>
                   <span className={cx('t-area')}>{log.area}</span>
+                  <div className={cx('t-action-cell')}>
+                    <button 
+                      className={cx('btn-video-trigger')}
+                      onClick={() => setSelectedVideoLog(log)}
+                    >
+                      영상 보기
+                    </button>
+                  </div>
                 </div>
               ))
             ) : (
@@ -144,6 +183,8 @@ const Alert = () => {
           </div>
         )}
       </section>
+
+      {renderVideoModal()}
     </div>
   );
 };

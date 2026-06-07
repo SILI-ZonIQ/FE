@@ -1,7 +1,6 @@
 import styles from '../css/Monitoring.module.css';
 
-// styles는 모니터링 화면 전용 CSS 이름표 모음입니다.
-// cx는 여러 이름표를 한 칸 띄워 붙여주는 도우미라서, 기존 디자인 값은 그대로 두고 충돌만 막습니다.
+
 const cx = (...classNames) => classNames.filter(Boolean).map((className) => styles[className]).join(' ');
 
 const IconCamera = () => <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>;
@@ -10,14 +9,14 @@ const IconAlert = () => <svg width="18" height="18" viewBox="0 0 24 24" fill="no
 const IconLoc = () => <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>;
 
 const Monitoring = () => {
-  // 위험 구역 현황 데이터
+
   const zones = [
     { id: 1, name: 'Zone A (용접실)', coords: '124.5, 45.2', status: '위험', color: '#ff4d4f' },
     { id: 2, name: 'Zone B (자재창고)', coords: '210.1, 88.4', status: '주의', color: '#faad14' },
     { id: 3, name: 'Zone C (조립라인)', coords: '15.8, 122.9', status: '안전', color: '#52c41a' },
   ];
 
-  // 실시간 감지 정보 데이터
+
   const detections = {
     totalWorkers: 5,
     dangerZoneWorkers: 0,
@@ -29,7 +28,7 @@ const Monitoring = () => {
     <div className={cx('monitoring-content')}>
       <div className={cx('monitoring-layout')}>
         
-        {/* 왼쪽: 단일 대형 CCTV 화면 */}
+        {/* 왼쪽 - 단일 대형 CCTV 화면 */}
         <div className={cx('main-cctv-area')}>
           <div className={cx('cctv-header')}>
             <span className={cx('cctv-title')}>Main CCTV - Factory Floor A</span>
@@ -47,10 +46,10 @@ const Monitoring = () => {
           </div>
         </div>
 
-        {/* 오른쪽: 감지 정보 및 위험 구역 현황 */}
+        {/* 오른쪽 - 감지 정보 및 위험 구역 현황 */}
         <div className={cx('side-data-area')}>
           
-          {/* 1. 실시간 감지 정보 */}
+          {/* 실시간 감지 정보 */}
           <section className={cx('data-card', 'detection-card')}>
             <h3 className={cx('card-title')}>실시간 감지 정보</h3>
             <div className={cx('detection-stats')}>
@@ -69,7 +68,7 @@ const Monitoring = () => {
             </div>
           </section>
 
-          {/* 2. 위험 구역 현황 */}
+          {/* 위험 구역 현황 */}
           <section className={cx('data-card', 'zone-card')}>
             <h3 className={cx('card-title')}>위험 구역 현황</h3>
             <div className={cx('zone-table')}>

@@ -5,15 +5,14 @@ import Monitoring from "./Monitoring";
 import PlcStatus from "./PLC";
 import AlertLog from "./Alert";
 
-// styles는 대시보드 전용 CSS 이름표 모음입니다. CSS Module 덕분에 같은 class 이름도 다른 파일과 충돌하지 않습니다.
-// cx는 여러 CSS 이름표를 붙이는 도우미입니다. 조건이 false인 이름표는 자동으로 빼줍니다.
+
 const cx = (...classNames) =>
     classNames
         .filter(Boolean)
         .map((className) => styles[className])
         .join(" ");
 
-// --- Icons ---
+
 const IconDashboard = () => (
     <svg
         width="20"
@@ -146,7 +145,7 @@ const Dashboard = () => {
     const navigate = useNavigate();
     const location = useLocation();
 
-    // 💡 로그인 화면에서 전달한 동적 사용자 이름 (없으면 기본값 '홍길동')
+
     const userName = location.state?.username || "홍길동";
 
     const activeMenu = menuByPath[location.pathname] || "dashboard";
@@ -207,7 +206,6 @@ const Dashboard = () => {
         navigate("/");
     };
 
-    // ⭕ 메뉴 클릭으로 라우트를 변경할 때도 현재 보유한 userName 상태값을 계속 유지하며 전달하도록 안전장치를 매핑했습니다.
     const handleMenuClick = (menu) => {
         navigate(pathByMenu[menu], { state: { username: userName } });
     };
@@ -515,7 +513,6 @@ const Dashboard = () => {
     return (
         <div className={cx("dashboard-container")}>
             <aside className={cx("sidebar")}>
-                {/* 🎯 ZONIQ 로고 영역 클릭 시 대시보드로 이동할 수 있도록 이벤트 및 마우스 커서 스타일 적용 */}
                 <div 
                     className={cx("sidebar-logo")} 
                     onClick={() => handleMenuClick("dashboard")}

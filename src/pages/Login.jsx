@@ -2,8 +2,6 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styles from '../css/login.module.css';
 
-// styles는 이 파일 전용 CSS 이름표 모음입니다. 다른 페이지 CSS와 이름이 같아도 서로 섞이지 않습니다.
-// cx는 "login-card active"처럼 여러 이름표가 필요할 때 안전하게 합쳐주는 도우미입니다.
 const cx = (...classNames) => classNames.filter(Boolean).map((className) => styles[className]).join(' ');
 
 const ShieldIcon = ({ size = 48, color = "#0046B4" }) => (
@@ -36,20 +34,18 @@ const Login = () => {
       alert('이름과 전화번호를 모두 입력해주세요.');
       return;
     }
-    // ⭕ 로그인 성공 시 입력받은 name 상태값을 대시보드로 동적 전송합니다.
+
     navigate('/dashboard', { state: { username: name } });
   };
 
   return (
     <div className={cx('login-container')}>
-      {/* 상단 우측 시계 제거됨 */}
+      
 
       <div className={cx('login-card')}>
         <div className={cx('login-header')}>
-          {/* 방패 아이콘 크기 64로 확대 */}
           <div className={cx('logo-icon')}><ShieldIcon size={64} /></div>
           
-          {/* 브랜드명 분리 및 크기 조정 */}
           <h1 className={cx('brand-name')}>
             <span className={cx('brand-zon')}>ZON</span>
             <span className={cx('brand-iq')}>IQ</span>

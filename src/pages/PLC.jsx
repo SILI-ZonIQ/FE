@@ -1,11 +1,10 @@
 import { useState } from 'react';
 import styles from '../css/PLC.module.css';
 
-// styles는 PLC 화면 전용 CSS 이름표 모음입니다.
-// cx는 버튼 상태처럼 class가 여러 개 필요할 때 CSS Module 이름으로 바꿔서 붙여줍니다.
+
 const cx = (...classNames) => classNames.filter(Boolean).map((className) => styles[className]).join(' ');
 
-// --- 💡 모달 전용 SVG 아이콘 정의 ---
+
 const IconClock = () => <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ verticalAlign: 'middle' }}><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>;
 const IconCalendar = () => <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ verticalAlign: 'middle' }}><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>;
 const IconHourglass = () => <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ verticalAlign: 'middle' }}><path d="M5 2h14M5 22h14M19 2v4c0 3-2.5 5.5-5.5 5.5s-5.5-2.5-5.5-5.5V2M19 22v-4c0-3-2.5-5.5-5.5-5.5S8 15 8 18v4"/></svg>;
@@ -14,7 +13,7 @@ const IconBox = () => <svg width="16" height="16" viewBox="0 0 24 24" fill="none
 const IconSearch = () => <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ verticalAlign: 'middle' }}><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>;
 const IconWrench = () => <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ verticalAlign: 'middle' }}><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>;
 
-// 화면 확인용 초기 더미데이터입니다.
+
 const initialRepairHistoryData = [
   {
     id: 12,
@@ -113,7 +112,7 @@ const initialRepairHistoryData = [
   }
 ];
 
-// 설비 선택시 자동 매칭될 기기별 메타 정보 맵
+
 const machineMetaMap = {
   '로봇 암 1호기': { code: 'PLC-RA-001', location: '조립 라인 A', type: '모터 과열' },
   '컨베이어 벨트': { code: 'PLC-CV-014', location: '포장 라인 B', type: '벨트 이탈' },
@@ -125,7 +124,7 @@ const PlcStatus = () => {
   const [activeTab, setActiveTab] = useState('register');
   const [selectedRepair, setSelectedRepair] = useState(null);
 
-  // ⭕ 폼 초기 상태 선언
+
   const initialFormState = {
     machinery: '',
     breakdownDate: '2025-05-20',
@@ -138,7 +137,7 @@ const PlcStatus = () => {
 
   const [repairForm, setRepairForm] = useState(initialFormState);
 
-  // ⭕ 가변 상태로 변경: 신규 데이터 추가가 가능하도록 useState 바인딩
+
   const [historyLogs, setHistoryLogs] = useState(initialRepairHistoryData);
 
   const [selectedDetail, setSelectedDetail] = useState({
@@ -157,14 +156,14 @@ const PlcStatus = () => {
     setRepairForm({ ...repairForm, [name]: value });
   };
 
-  // ⭕ 초기화 버튼 클릭 핸들러
+
   const handleClearForm = () => {
     setRepairForm(initialFormState);
   };
 
-  // ⭕ 저장 버튼 클릭 시 실시간 리스트 추가 로직
+
   const handleSave = () => {
-    // 필수 항목 유효성 검사 (*)
+
     if (!repairForm.machinery) return alert('설비를 선택해주세요.');
     if (!repairForm.breakdownDate) return alert('고장 발생 일시를 입력해주세요.');
     if (!repairForm.startDate) return alert('수리 시작 일시를 입력해주세요.');
@@ -172,20 +171,20 @@ const PlcStatus = () => {
     if (!repairForm.content.trim()) return alert('수리 내용을 입력하세요.');
     if (!repairForm.assignee.trim()) return alert('수리 담당자를 입력하세요.');
 
-    // 설비 명칭 기반 메타데이터 추출
+
     const meta = machineMetaMap[repairForm.machinery] || { code: 'PLC-GEN-000', location: '미지정', type: '일반 점검' };
     
-    // 수리 완료 일시 입력 여부에 따른 상태 분기 처리
+
     const isCompleted = repairForm.endDate !== '';
 
-    // 새 리스트 객체 생성
+
     const newLog = {
       id: historyLogs.length > 0 ? Math.max(...historyLogs.map(l => l.id)) + 1 : 1,
       name: repairForm.machinery,
       code: meta.code,
       location: meta.location,
       type: meta.type,
-      date: repairForm.startDate, // 리스트 표기용 메인 날짜
+      date: repairForm.startDate, 
       breakdownDate: repairForm.breakdownDate,
       startDate: repairForm.startDate,
       endDate: isCompleted ? repairForm.endDate : '-',
@@ -195,15 +194,15 @@ const PlcStatus = () => {
       part: '기본 소모품 교체',
       inspection: isCompleted ? '정상' : '점검중',
       cause: repairForm.reason,
-      actions: repairForm.content.split(',').map(item => item.trim()), // 컴마 기준 배열화
+      actions: repairForm.content.split(',').map(item => item.trim()), 
       image: 'https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=500&q=80'
     };
 
-    // 최신 등록 건이 가장 위(배열 맨 앞)로 오도록 상태 관리 업데이트
+
     const updatedLogs = [newLog, ...historyLogs];
     setHistoryLogs(updatedLogs);
 
-    // 우측 하단 상세 정보 영역에 방금 등록한 수리 내역 바로 자동 선택 노출
+
     setSelectedDetail({
       name: newLog.name,
       breakdownDate: newLog.breakdownDate,
@@ -215,7 +214,7 @@ const PlcStatus = () => {
       status: newLog.status
     });
 
-    // 등록 완료 후 폼 입력값 깨끗하게 초기화
+
     handleClearForm();
     alert('수리 내역이 성공적으로 등록되었습니다.');
   };
