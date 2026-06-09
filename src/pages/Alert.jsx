@@ -1,5 +1,7 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import styles from '../css/Alert.module.css';
+
+const API_URL = 'http://127.0.0.1:8000';
 
 const cx = (...classNames) => classNames.filter(Boolean).map((className) => styles[className]).join(' ');
 
@@ -8,25 +10,47 @@ const IconCamera = () => <svg width="56" height="56" viewBox="0 0 24 24" fill="n
 
 const Alert = () => {
   const [filters, setFilters] = useState({
-    dateStart: '2025-05-01',
-    dateEnd: '2025-05-20'
+    dateStart: '',
+    dateEnd: ''
   });
-
+  
   const [appliedFilters, setAppliedFilters] = useState({
-    dateStart: '2025-05-01',
-    dateEnd: '2025-05-20'
+    dateStart: '',
+    dateEnd: ''
   });
 
-  const [logs] = useState([
-    { id: 1, date: '2025-05-20', time: '09:29:12', area: 'Zone A' },
-    { id: 2, date: '2025-05-20', time: '09:28:44', area: 'Zone B' },
-    { id: 3, date: '2025-05-19', time: '14:15:30', area: '정문' },
-    { id: 4, date: '2025-05-19', time: '11:05:12', area: '전기실' },
-    { id: 5, date: '2025-05-18', time: '16:40:05', area: 'Zone C' },
-    { id: 6, date: '2025-05-18', time: '10:20:33', area: '컨베이어' },
-    { id: 7, date: '2025-05-17', time: '15:10:22', area: 'Zone A' },
-    { id: 8, date: '2025-05-17', time: '13:45:01', area: 'Zone C' },
-  ]);
+  const [logs, setLogs] = useState([]);
+  
+  useEffect(() => {
+    fetchDangerEvents();
+  }, []);
+  
+  const fetchDangerEvents = async () => {
+    try {
+      const response = await fetch(`${API_URL}/danger-events`);
+      const data = await response.json();
+  
+      console.log("위험로그 API 데이터:", data);
+  
+      const converted = data.map((item) => {
+        const [date, time] = item.event_time.split(" ");
+  
+        return {
+          id: item.event_id,
+          date,
+          time,
+          area: "위험구역",
+          machineStatus: item.machine_status,
+          videoPath: item.video_path
+        };
+      });
+  
+      setLogs(converted);
+    } catch (error) {
+      console.error(error);
+      alert("위험 로그 조회 실패");
+    }
+  };
 
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 5;
@@ -48,8 +72,8 @@ const Alert = () => {
 
   const handleReset = () => {
     const defaultFilters = {
-      dateStart: '2025-05-01',
-      dateEnd: '2025-05-20'
+      dateStart: '',
+      dateEnd: ''
     };
     setFilters(defaultFilters);
     setAppliedFilters(defaultFilters);
@@ -57,7 +81,15 @@ const Alert = () => {
   };
 
   const filteredLogs = logs.filter(log => {
-    return log.date >= appliedFilters.dateStart && log.date <= appliedFilters.dateEnd;
+    if (appliedFilters.dateStart && log.date < appliedFilters.dateStart) {
+      return false;
+    }
+  
+    if (appliedFilters.dateEnd && log.date > appliedFilters.dateEnd) {
+      return false;
+    }
+  
+    return true;
   });
 
   const indexOfLastItem = currentPage * itemsPerPage;
@@ -83,11 +115,17 @@ const Alert = () => {
           <div className={cx('video-modal-body')}>
             <div className={cx('video-screen-container')}>
               <div className={cx('video-live-indicator')}>● 당시 상황 기록</div>
-              <div className={cx('video-placeholder-box')}>
-                <IconCamera />
-                <p>[{selectedVideoLog.date} {selectedVideoLog.time}] 발생 위험 감지 영상</p>
-                <span>카메라 피드 데이터 수집 완료 및 아카이빙됨</span>
-              </div>
+              <video
+                controls
+                width="100%"
+                src={`http://127.0.0.1:8000/${selectedVideoLog.videoPath}`}
+                style={{
+                  width: '100%',
+                  height: '420px',
+                  backgroundColor: '#000',
+                  borderRadius: '8px'
+                }}
+              />    
             </div>
             <div className={cx('video-info-strip')}>
               <span><strong>발생 일시:</strong> {selectedVideoLog.date} {selectedVideoLog.time}</span>

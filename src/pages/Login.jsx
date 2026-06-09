@@ -2,7 +2,10 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styles from '../css/login.module.css';
 
-const cx = (...classNames) => classNames.filter(Boolean).map((className) => styles[className]).join(' ');
+const cx = (...classNames) =>
+  classNames.filter(Boolean).map((className) => styles[className]).join(' ');
+
+const API_URL = 'http://127.0.0.1:8000';
 
 const ShieldIcon = ({ size = 48, color = "#0046B4" }) => (
   <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
@@ -25,56 +28,98 @@ const PhoneIcon = ({ size = 20, color = "#999" }) => (
 
 const Login = () => {
   const navigate = useNavigate();
+
   const [name, setName] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
+  const [loading, setLoading] = useState(false);
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
+
     if (!name.trim() || !phoneNumber.trim()) {
       alert('이름과 전화번호를 모두 입력해주세요.');
       return;
     }
 
-    navigate('/dashboard', { state: { username: name } });
+    try {
+      setLoading(true);
+
+      const response = await fetch(`${API_URL}/workers/login`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: name.trim(),
+          phone: phoneNumber.trim(),
+        }),
+      });
+
+      const data = await response.json();
+
+      if (data.result !== 'success') {
+        alert(data.message || '로그인에 실패했습니다.');
+        return;
+      }
+
+      localStorage.setItem('worker_id', data.worker_id);
+      localStorage.setItem('worker_name', data.name);
+
+      navigate('/dashboard', {
+        state: {
+          username: data.name,
+        },
+      });
+    } catch (error) {
+      console.error(error);
+      alert('서버 연결에 실패했습니다. FastAPI 서버가 켜져 있는지 확인해주세요.');
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
     <div className={cx('login-container')}>
-      
-
       <div className={cx('login-card')}>
         <div className={cx('login-header')}>
           <div className={cx('logo-icon')}><ShieldIcon size={64} /></div>
-          
+
           <h1 className={cx('brand-name')}>
             <span className={cx('brand-zon')}>ZON</span>
             <span className={cx('brand-iq')}>IQ</span>
           </h1>
         </div>
+
         <div className={cx('divider')}></div>
+
         <div className={cx('login-body')}>
           <h2 className={cx('login-title')}>로그인</h2>
           <p className={cx('login-subtitle')}>계정 정보를 입력하여 로그인해주세요.</p>
+
           <form className={cx('login-form')} onSubmit={handleLogin}>
             <div className={cx('input-group')}>
               <span className={cx('input-icon')}><UserIcon /></span>
-              <input 
-                type="text" 
-                value={name} 
-                onChange={(e) => setName(e.target.value)} 
-                placeholder="이름을 입력해주세요" 
+              <input
+                type="text"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                placeholder="이름을 입력해주세요"
               />
             </div>
+
             <div className={cx('input-group')}>
               <span className={cx('input-icon')}><PhoneIcon /></span>
-              <input 
-                type="text" 
-                value={phoneNumber} 
-                onChange={(e) => setPhoneNumber(e.target.value)} 
-                placeholder="전화번호를 입력해주세요" 
+              <input
+                type="text"
+                value={phoneNumber}
+                onChange={(e) => setPhoneNumber(e.target.value)}
+                placeholder="전화번호를 입력해주세요"
               />
             </div>
-            <button type="submit" className={cx('login-button')}>로그인</button>
+
+            <button type="submit" className={cx('login-button')} disabled={loading}>
+              {loading ? '로그인 중...' : '로그인'}
+            </button>
           </form>
         </div>
       </div>
