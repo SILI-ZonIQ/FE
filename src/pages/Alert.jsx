@@ -6,35 +6,31 @@ const API_URL = 'http://127.0.0.1:8000';
 const cx = (...classNames) => classNames.filter(Boolean).map((className) => styles[className]).join(' ');
 
 const IconSearch = () => <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>;
-const IconCamera = () => <svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>;
 
 const Alert = () => {
+  // 조회기간 기본 날짜 세팅 (2026.01.01 ~ 2026.12.31)
   const [filters, setFilters] = useState({
-    dateStart: '',
-    dateEnd: ''
+    dateStart: '2026-01-01',
+    dateEnd: '2026-12-31'
   });
   
   const [appliedFilters, setAppliedFilters] = useState({
-    dateStart: '',
-    dateEnd: ''
+    dateStart: '2026-01-01',
+    dateEnd: '2026-12-31'
   });
 
   const [logs, setLogs] = useState([]);
   
-  useEffect(() => {
-    fetchDangerEvents();
-  }, []);
-  
+  // [수정] 에디터 빨간 줄을 없애기 위해 화살표 함수 표현식(const)으로 명확하게 변경했습니다.
   const fetchDangerEvents = async () => {
     try {
       const response = await fetch(`${API_URL}/danger-events`);
       const data = await response.json();
-  
+
       console.log("위험로그 API 데이터:", data);
-  
+
       const converted = data.map((item) => {
         const [date, time] = item.event_time.split(" ");
-  
         return {
           id: item.event_id,
           date,
@@ -44,13 +40,17 @@ const Alert = () => {
           videoPath: item.video_path
         };
       });
-  
+
       setLogs(converted);
     } catch (error) {
       console.error(error);
       alert("위험 로그 조회 실패");
     }
   };
+
+  useEffect(() => {
+    fetchDangerEvents();
+  }, []);
 
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 5;
@@ -72,8 +72,8 @@ const Alert = () => {
 
   const handleReset = () => {
     const defaultFilters = {
-      dateStart: '',
-      dateEnd: ''
+      dateStart: '2026-01-01',
+      dateEnd: '2026-12-31'
     };
     setFilters(defaultFilters);
     setAppliedFilters(defaultFilters);
@@ -140,7 +140,7 @@ const Alert = () => {
   return (
     <div className={cx('alert-log-content')}>
       <section className={cx('filter-section')} style={{ borderRadius: '6px' }}>
-        <div className={cx('filter-grid')}>
+        <div className={cx('filter-wrapper')}>
           <div className={cx('filter-group')}>
             <label>조회 기간</label>
             <div className={cx('date-inputs')}>
@@ -149,10 +149,10 @@ const Alert = () => {
               <input type="date" name="dateEnd" value={filters.dateEnd} onChange={handleFilterChange} />
             </div>
           </div>
-        </div>
-        <div className={cx('filter-actions')}>
-          <button className={cx('reset-btn')} onClick={handleReset}>초기화</button>
-          <button className={cx('search-btn')} onClick={handleSearch}><IconSearch /> 검색하기</button>
+          <div className={cx('filter-actions')}>
+            <button className={cx('reset-btn')} onClick={handleReset}>초기화</button>
+            <button className={cx('search-btn')} onClick={handleSearch}><IconSearch /> 검색하기</button>
+          </div>
         </div>
       </section>
 

@@ -11,10 +11,12 @@
   margin-bottom: 20px;
 }
 
-.filter-grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  margin-bottom: 14px;
+/* 상단 배치 정렬을 위한 래퍼 스타일 추가 */
+.filter-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 20px;
 }
 
 .filter-group {
@@ -29,7 +31,9 @@
   color: #555;
 }
 
+/* 조회기간 인풋창 너비 줄이기 */
 .filter-group input {
+  width: 200px;
   padding: 10px 14px;
   border: 1px solid #ddd;
   border-radius: 6px;
@@ -48,18 +52,12 @@
   gap: 8px;
 }
 
-.date-inputs input {
-  flex: 1;
-}
-
+/* 버튼 영역을 상단 우측으로 정렬 및 기존 상단 보더 제거 */
 .filter-actions {
   display: flex;
   justify-content: flex-end;
   gap: 10px;
-  padding-top: 14px;
-  border-top: 1px solid #f5f7fa;
 }
-
 
 .search-btn, .reset-btn {
   padding: 10px 26px;
@@ -80,7 +78,7 @@
 }
 
 .search-btn:hover {
-  background: #174275; 
+  background: #103056; 
 }
 
 .reset-btn {
@@ -147,7 +145,6 @@
 }
 
 .t-row:hover { background: #fafbfc; }
-
 
 .t-datetime { display: flex; flex-direction: column; }
 .t-datetime .d { font-weight: 600; color: #333; }

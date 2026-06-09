@@ -9,7 +9,6 @@
   align-items: start;
 }
 
-
 .main-cctv-area {
   background: white;
   padding: 25px;
@@ -73,16 +72,26 @@
   font-size: 14px;
 }
 
-.data-card {
+.side-data-area {
+  display: flex;
+  flex-direction: column;
+}
+
+.zone-card {
   background: white;
   padding: 25px;
   border-radius: 6px;
   border: 1px solid #eef0f2;
   box-shadow: 0 4px 15px rgba(0,0,0,0.04);
-  margin-bottom: 25px;
+  margin-bottom: 0;
+
+  height: 650px;
+
+  display: flex;
+  flex-direction: column;
+
+  overflow: hidden;
 }
-
-
 
 .card-title {
   font-size: 17px;
@@ -93,76 +102,48 @@
   border-left: 4px solid #0046B4;
 }
 
-
-.detection-stats {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
+.table-scroll-container {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding-right: 4px;
+  min-height: 0;
 }
 
-.stat-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 15px 20px;
+/* 모던하고 깔끔한 커스텀 디자인 스크롤바 */
+.table-scroll-container::-webkit-scrollbar {
+  width: 5px;
+}
+
+.table-scroll-container::-webkit-scrollbar-track {
   background: #f8f9fb;
-  border-radius: 6px;
+  border-radius: 3px;
 }
 
-.stat-item.danger {
-  background: #fff1f0;
-  border: 1px solid rgba(255, 77, 79, 0.2);
+.table-scroll-container::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 3px;
 }
 
-.stat-label {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  font-size: 14px;
-  color: #666;
-  font-weight: 600;
+.table-scroll-container::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
 }
-
-.stat-item.danger .stat-label { color: #ff4d4f; }
-
-.stat-value {
-  font-size: 22px;
-  font-weight: 800;
-  color: #333;
-}
-
-.stat-value span {
-  font-size: 14px;
-  color: #999;
-  margin-left: 4px;
-  font-weight: 500;
-}
-
-.stat-value.highlight {
-  color: #ff4d4f;
-  font-size: 18px;
-}
-
-.last-event-box {
-  margin-top: 20px;
-  padding: 15px;
-  background: #f0f4ff;
-  border-radius: 6px;
-  font-size: 13px;
-}
-
-.event-label { font-weight: 700; color: #0046B4; margin-right: 8px; }
-.event-msg { color: #333; }
-
 
 .zone-table {
   display: flex;
   flex-direction: column;
+  width: 100%;
+}
+
+/* 글자 깨짐 및 겹침 방지를 위해 단일 그리드 비율 정립 */
+.table-header, .table-row {
+  display: grid;
+  grid-template-columns: 1.4fr 1.1fr 0.5fr;
+  align-items: center;
+  gap: 10px;
 }
 
 .table-header {
-  display: grid;
-  grid-template-columns: 1.2fr 1fr 0.6fr;
   padding: 10px 15px;
   background: #f5f7fa;
   border-radius: 6px;
@@ -170,16 +151,56 @@
   color: #888;
   font-weight: 700;
   margin-bottom: 10px;
+  position: sticky;
+  top: 0;
+  z-index: 5;
+}
+
+.table-body {
+  display: flex;
+  flex-direction: column;
+  /* 제일 마지막 행 아이템이 카드 바닥 모서리에 걸려 반만 잘리는 문제를 해결하기 위한 안전 바닥 여백 */
+  padding-bottom: 20px;
 }
 
 .table-row {
-  display: grid;
-  grid-template-columns: 1.2fr 1fr 0.6fr;
   padding: 15px;
   border-bottom: 1px solid #f5f7fa;
-  align-items: center;
 }
 
-.z-name { font-size: 14px; font-weight: 600; color: #333; }
-.z-coords { font-size: 12px; color: #777; display: flex; align-items: center; gap: 5px; }
-.z-status { font-size: 13px; font-weight: 700; text-align: right; }
+.table-row:last-child {
+  border-bottom: none;
+}
+
+.h-cell {
+  display: block;
+}
+
+.text-right {
+  text-align: right;
+}
+
+.z-name { 
+  font-size: 14px; 
+  font-weight: 600; 
+  color: #333;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.z-coords { 
+  font-size: 12px; 
+  color: #777; 
+  display: flex; 
+  align-items: center; 
+  gap: 5px; 
+  white-space: nowrap;
+}
+
+.z-status { 
+  font-size: 13px; 
+  font-weight: 700; 
+  text-align: right; 
+  white-space: nowrap;
+}
