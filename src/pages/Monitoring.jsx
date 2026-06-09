@@ -27,8 +27,7 @@ const Monitoring = () => {
   return (
     <div className={cx('monitoring-content')}>
       <div className={cx('monitoring-layout')}>
-        
-        {/* 왼쪽 - 단일 대형 CCTV 화면 */}
+
         <div className={cx('main-cctv-area')}>
           <div className={cx('cctv-header')}>
             <span className={cx('cctv-title')}>Main CCTV - Factory Floor A</span>
@@ -46,12 +45,10 @@ const Monitoring = () => {
           </div>
         </div>
 
-        {/* 오른쪽 - 위험 구역 현황 단독 배치 */}
         <div className={cx('side-data-area')}>
           <section className={cx('data-card', 'zone-card')}>
             <h3 className={cx('card-title')}>위험 구역 현황</h3>
-            
-            {/* 레이아웃 고정 및 스크롤을 담당하는 안전한 컨테이너 */}
+
             <div className={cx('table-scroll-container')}>
               <div className={cx('zone-table')}>
                 <div className={cx('table-header')}>

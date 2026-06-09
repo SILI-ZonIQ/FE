@@ -8,7 +8,6 @@ const cx = (...classNames) => classNames.filter(Boolean).map((className) => styl
 const IconSearch = () => <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>;
 
 const Alert = () => {
-  // 조회기간 기본 날짜 세팅 (2026.01.01 ~ 2026.12.31)
   const [filters, setFilters] = useState({
     dateStart: '2026-01-01',
     dateEnd: '2026-12-31'
@@ -20,8 +19,7 @@ const Alert = () => {
   });
 
   const [logs, setLogs] = useState([]);
-  
-  // [수정] 에디터 빨간 줄을 없애기 위해 화살표 함수 표현식(const)으로 명확하게 변경했습니다.
+
   const fetchDangerEvents = async () => {
     try {
       const response = await fetch(`${API_URL}/danger-events`);
