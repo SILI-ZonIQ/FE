@@ -116,14 +116,14 @@ const Alert = () => {
               <video
                 controls
                 width="100%"
-                src={`http://127.0.0.1:8000/${selectedVideoLog.videoPath}`}
+                src={`${API_URL}/${selectedVideoLog.videoPath}`}
                 style={{
                   width: '100%',
                   height: '420px',
                   backgroundColor: '#000',
                   borderRadius: '8px'
                 }}
-              />    
+              />
             </div>
             <div className={cx('video-info-strip')}>
               <span><strong>발생 일시:</strong> {selectedVideoLog.date} {selectedVideoLog.time}</span>
