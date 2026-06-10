@@ -5,7 +5,7 @@ import Monitoring from "./Monitoring";
 import PlcStatus from "./PLC";
 import AlertLog from "./Alert";
 
-const API_URL = "http://10.159.244.154:8000";
+const API_URL = "http://172.20.10.4:8000";
 
 const cx = (...classNames) =>
     classNames
