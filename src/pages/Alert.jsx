@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import styles from '../css/Alert.module.css';
 
-const API_URL = 'http://127.0.0.1:8000';
+const API_URL = 'http://10.159.244.154:8000';
 
 const cx = (...classNames) => classNames.filter(Boolean).map((className) => styles[className]).join(' ');
 
