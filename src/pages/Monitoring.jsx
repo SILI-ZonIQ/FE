@@ -1,6 +1,6 @@
 import styles from '../css/Monitoring.module.css';
 
-const API_URL = "http://172.20.10.4:8000";
+import { API_URL } from '../config';
 
 const cx = (...classNames) =>
   classNames.filter(Boolean).map((className) => styles[className]).join(' ');
@@ -52,6 +52,7 @@ const Monitoring = ({ latestEvent }) => {
 
             {videoUrl ? (
               <video
+                key={videoUrl}
                 controls
                 muted
                 autoPlay

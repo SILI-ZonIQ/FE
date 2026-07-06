@@ -5,7 +5,7 @@ import styles from '../css/login.module.css';
 const cx = (...classNames) =>
   classNames.filter(Boolean).map((className) => styles[className]).join(' ');
 
-const API_URL = "http://172.20.10.4:8000";
+import { API_URL } from '../config';;
 
 const ShieldIcon = ({ size = 48, color = "#0046B4" }) => (
   <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">

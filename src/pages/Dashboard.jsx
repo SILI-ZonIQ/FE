@@ -5,7 +5,7 @@ import Monitoring from "./Monitoring";
 import PlcStatus from "./PLC";
 import AlertLog from "./Alert";
 
-const API_URL = "http://172.20.10.4:8000";
+import { API_URL } from '../config';
 
 const cx = (...classNames) =>
     classNames
@@ -151,7 +151,7 @@ const Dashboard = () => {
 
         const timer = setInterval(() => {
             fetchLatestEvent();
-        }, 5000);
+        }, 3000);
 
         return () => clearInterval(timer);
     }, []);
@@ -352,6 +352,7 @@ const Dashboard = () => {
                     >
                         {latestEvent?.video_path ? (
                             <video
+                                key={latestEvent.video_path}
                                 controls
                                 muted
                                 autoPlay

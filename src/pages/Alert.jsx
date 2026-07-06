@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import styles from '../css/Alert.module.css';
 
-const API_URL = 'http://172.20.10.4:8000';
+import { API_URL } from '../config';
 
 const cx = (...classNames) => classNames.filter(Boolean).map((className) => styles[className]).join(' ');
 
@@ -12,20 +12,22 @@ const Alert = () => {
     dateStart: '2026-01-01',
     dateEnd: '2026-12-31'
   });
-  
+
   const [appliedFilters, setAppliedFilters] = useState({
     dateStart: '2026-01-01',
     dateEnd: '2026-12-31'
   });
 
   const [logs, setLogs] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 5;
+
+  const [selectedVideoLog, setSelectedVideoLog] = useState(null);
 
   const fetchDangerEvents = async () => {
     try {
       const response = await fetch(`${API_URL}/danger-events`);
       const data = await response.json();
-
-      console.log("위험로그 API 데이터:", data);
 
       const converted = data.map((item) => {
         const [date, time] = item.event_time.split(" ");
@@ -41,19 +43,19 @@ const Alert = () => {
 
       setLogs(converted);
     } catch (error) {
-      console.error(error);
-      alert("위험 로그 조회 실패");
+      console.error("위험 로그 조회 실패:", error);
     }
   };
 
   useEffect(() => {
     fetchDangerEvents();
+
+    const timer = setInterval(() => {
+      fetchDangerEvents();
+    }, 3000);
+
+    return () => clearInterval(timer);
   }, []);
-
-  const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 5;
-
-  const [selectedVideoLog, setSelectedVideoLog] = useState(null);
 
   const handleFilterChange = (e) => {
     const { name, value } = e.target;
@@ -65,7 +67,7 @@ const Alert = () => {
       dateStart: filters.dateStart,
       dateEnd: filters.dateEnd
     });
-    setCurrentPage(1); 
+    setCurrentPage(1);
   };
 
   const handleReset = () => {
@@ -82,11 +84,11 @@ const Alert = () => {
     if (appliedFilters.dateStart && log.date < appliedFilters.dateStart) {
       return false;
     }
-  
+
     if (appliedFilters.dateEnd && log.date > appliedFilters.dateEnd) {
       return false;
     }
-  
+
     return true;
   });
 
@@ -174,7 +176,7 @@ const Alert = () => {
                   </div>
                   <span className={cx('t-area')}>{log.area}</span>
                   <div className={cx('t-action-cell')}>
-                    <button 
+                    <button
                       className={cx('btn-video-trigger')}
                       onClick={() => setSelectedVideoLog(log)}
                     >
@@ -190,10 +192,10 @@ const Alert = () => {
             )}
           </div>
         </div>
-        
+
         {filteredLogs.length > 0 && (
           <div className={cx('pagination')}>
-            <button 
+            <button
               onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
               disabled={currentPage === 1}
             >
@@ -210,7 +212,7 @@ const Alert = () => {
               </button>
             ))}
 
-            <button 
+            <button
               onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
               disabled={currentPage === totalPages}
             >
